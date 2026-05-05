@@ -1,0 +1,1 @@
+module.exports = { BASE_URL: "https://buffalodesignandprinting.com", HEADERS: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }, UNWANTED_PHRASES: [ "add to cart", "shipping", "estimate", "quantity", "sku", "select options" ] };

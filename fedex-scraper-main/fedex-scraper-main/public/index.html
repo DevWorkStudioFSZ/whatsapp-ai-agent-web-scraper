@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FedEx Scraper</title>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="style.css">
+      <style>
+                :root {
+                              --primary: #4D148C;
+                              --secondary: #FF6600;
+                              --bg: #F7F7F7;
+                              --white: #FFFFFF;
+                              --text: #333;
+                }
+                body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+                .navbar { background: var(--primary); padding: 1rem 2rem; color: white; display: flex; align-items: center; gap: 10px; }
+                .logo { font-weight: 700; font-size: 1.5rem; }
+                .container { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
+                .search-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; gap: 15px; }
+                input { flex: 1; padding: 12px 20px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; transition: 0.3s; }
+                input:focus { border-color: var(--primary); }
+                button { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+                button:hover { background: #3a106a; transform: translateY(-2px); }
+                .status { margin-top: 20px; font-size: 0.9rem; color: #666; }
+                .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
+                .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: 0.3s; }
+                .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+                .card img { width: 100%; height: 200px; object-fit: contain; background: white; padding: 10px; }
+                .card-content { padding: 20px; }
+                .card-title { font-weight: 700; margin-bottom: 10px; font-size: 1.1rem; }
+                .card-price { color: var(--secondary); font-weight: 700; font-size: 1.25rem; }
+                .loader { width: 48px; height: 48px; border: 5px solid #FFF; border-bottom-color: var(--primary); border-radius: 50%; display: none; box-sizing: border-box; animation: rotation 1s linear infinite; margin: 20px auto; }
+                @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            </style>
+  </head>
+  <body>
+        <div class="navbar"><div class="logo">FedEx Scraper</div>div></div>div>
+        <div class="container">
+                  <div class="search-box">
+                                <input type="text" id="urlInput" placeholder="Enter FedEx Office URL to Scrape..." value="https://www.office.fedex.com/default/business-cards.html">
+                                <button onclick="startScrape()">Start Scrape</button>button>
+                  </div>div>
+                  <div id="loader" class="loader"></div>div>
+                  <div id="status" class="status"></div>div>
+                  <div id="results" class="grid"></div>div>
+        </div>div>
+        <script>
+                  async function startScrape() {
+                                const results = document.getElementById('results');
+                                const loader = document.getElementById('loader');
+                                const status = document.getElementById('status');
+                                results.innerHTML = '';
+                                loader.style.display = 'block';
+                                status.innerText = 'Scraping started... please wait (up to 3 mins)';
+                                try {
+                                                  const res = await fetch('/scrape');
+                                                  const data = await res.json();
+                                                  loader.style.display = 'none';
+                                                  status.innerText = `Found ${data.length} products.`;
+                                                  data.forEach(p => {
+                                                                        results.innerHTML += `
+                                                                                                <div class="card">
+                                                                                                                            <img src="${p.image}" alt="${p.title}">
+                                                                                                                                                        <div class="card-content">
+                                                                                                                                                                                        <div class="card-title">${p.title}</div>
+                                                                                                                                                                                                                        <div class="card-price">${p.url.includes('fedex') ? 'View on Site' : 'N/A'}</div>
+                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                `;
+                                                  });
+                                } catch (err) {
+                                                  loader.style.display = 'none';
+                                                  status.innerText = 'Error: ' + err.message;
+                                }
+                  }
+        </script>
+  </body>
+</html>html>
+        </script>
+  </body>
+      </style></title>
+  </head>
